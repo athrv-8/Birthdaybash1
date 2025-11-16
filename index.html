@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Priyanshi 🎉</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #fce4ec;
+            overflow-x: hidden;
+        }
+
+        /* Floating hearts (soft & subtle) */
+        .heart {
+            position: fixed;
+            width: 18px;
+            height: 18px;
+            background: #ffc1e3;
+            transform: rotate(45deg);
+            animation: float 6s linear infinite;
+            opacity: 0.45;
+            border-radius: 3px;
+        }
+
+        .heart:before,
+        .heart:after {
+            content: "";
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            background: #ffc1e3;
+            border-radius: 50%;
+        }
+        .heart:before { top: -9px; left: 0; }
+        .heart:after { left: -9px; top: 0; }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(45deg); opacity: 0.6; }
+            100% { transform: translateY(-800px) rotate(45deg); opacity: 0; }
+        }
+
+        /* Container */
+        .container {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        /* Typewriter */
+        .typewriter {
+            display: inline-block;
+            font-size: 28px;
+            color: #d81b60;
+            font-weight: 600;
+            overflow: hidden;
+            border-right: .15em solid #d81b60;
+            white-space: nowrap;
+            animation: typing 3.2s steps(30, end), blink .75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink {
+            from, to { border-color: transparent }
+            50% { border-color: #d81b60; }
+        }
+
+        /* Message card */
+        .card {
+            margin: auto;
+            margin-top: 35px;
+            width: 90%;
+            max-width: 380px;
+            background: white;
+            padding: 22px;
+            border-radius: 22px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.12);
+            animation: fadeIn 2s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .msg {
+            font-size: 17px;
+            margin-top: 10px;
+            color: #555;
+        }
+
+        /* Slider */
+        .slider {
+            margin-top: 30px;
+            display: flex;
+            overflow-x: auto;
+            gap: 18px;
+            padding: 15px;
+            scroll-behavior: smooth;
+        }
+
+        .slider::-webkit-scrollbar {
+            display: none;
+        }
+
+        .slider img {
+            height: 260px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+            transition: transform 0.3s ease;
+        }
+
+        .slider img:hover {
+            transform: scale(1.03);
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <!-- Soft background music -->
+    <audio autoplay loop>
+        <source src="https://cdn.pixabay.com/audio/2023/03/13/audio_7a7b351b1e.mp3">
+    </audio>
+
+    <!-- Hearts animation -->
+    <script>
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.className = "heart";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = (3 + Math.random() * 3) + "s";
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+        setInterval(createHeart, 350);
+    </script>
+
+    <div class="container">
+        <div class="typewriter">Happy Birthday Priyanshi 🎀</div>
+
+        <div class="card">
+            <p class="msg">
+                Wishing you a day full of light, peace and  
+                all the small joys you truly deserve ✨😊  
+                This little page is just a small way  
+                to make your day brighter 💛
+            </p>
+        </div>
+
+        <!-- Photo Slider (Your 6 Photos Added) -->
+        <div class="slider">
+            <img src="https://i.ibb.co/qwYzdhW/IMG-20251116-120503.jpg">
+            <img src="https://i.ibb.co/p6d09cBQ/IMG-20251116-120448.jpg">
+            <img src="https://i.ibb.co/1f5LpmHc/IMG-20251030-114937.jpg">
+            <img src="https://i.ibb.co/bjySY8D4/IMG-20251030-114921.jpg">
+            <img src="https://i.ibb.co/5XrFZcDD/signal-2025-08-08-21-11-57-417-4.jpg">
+            <img src="https://i.ibb.co/Ngwk5X34/signal-2025-08-08-21-11-57-417-2.jpg">
+        </div>
+
+    </div>
+
+</body>
+</html>
