@@ -1,411 +1,429 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Happy Birthday Priyanshi ✨</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<title>Happy Birthday — Priyanshi 🎀</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#fff8fb;
-    --accent:#e8438b;
-    --muted:#6b6b6b;
-    --glass: rgba(255,255,255,0.14);
+    --bg: #fff6fb;
+    --card: #fff;
+    --accent: #f06292; /* pinkish */
+    --accent-soft: #ff9dbf;
+    --muted: #6b6b6b;
+    --glass: rgba(255,255,255,0.18);
   }
-  *{box-sizing:border-box}
-  body{
-    margin:0;
-    font-family:'Poppins',sans-serif;
-    background: linear-gradient(180deg,#fff8fb 0%, #fff2f7 100%);
-    color:#222;
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    padding:22px;
-  }
+  html,body{height:100%;margin:0;font-family:"Poppins",sans-serif;background:linear-gradient(180deg,var(--bg), #fff0f6);color:#222;}
+  .centered { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; padding:24px; box-sizing:border-box; }
 
-  /* Header */
-  .header{
-    text-align:center;
-    margin-top:8px;
-  }
-  .title{
-    font-weight:700;
-    font-size:30px;
-    color:var(--accent);
-    letter-spacing:0.2px;
-  }
-  .sub{
-    margin-top:8px;
-    color:var(--muted);
-    font-size:15px;
-  }
+  /* Intro */
+  .intro-card{ max-width:920px; width:100%; text-align:center; padding:28px; border-radius:20px; background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.92)); box-shadow:0 20px 50px rgba(240,120,160,0.12); border:1px solid rgba(255,200,220,0.6); }
+  .intro-title{ font-size:36px; color:var(--accent); margin:6px 0; font-weight:700; letter-spacing:0.2px; }
+  .intro-sub{ font-size:16px; color:var(--muted); margin-bottom:18px; }
+  .surprise-btn{ background: linear-gradient(90deg,var(--accent), #c84a84); color:white; padding:12px 22px; border-radius:14px; border:none; cursor:pointer; font-weight:700; box-shadow:0 12px 30px rgba(200,80,140,0.12); font-size:16px; transition:transform .16s ease, box-shadow .16s ease; }
+  .surprise-btn:active{ transform:translateY(2px); }
+  .tiny-note{ margin-top:12px; color:var(--muted); font-size:13px; }
 
-  /* subtle floating hearts - very light */
-  .float-heart{
-    position:fixed;
-    width:14px;height:14px;
-    background:#ffd6ea;
-    transform:rotate(45deg);
-    opacity:0.45;
-    border-radius:3px;
-    pointer-events:none;
-    z-index:0;
-  }
-  /* container */
-  .wrap{
-    width:100%;
-    max-width:980px;
-    margin-top:18px;
-    z-index:1;
-  }
+  /* Gallery page area */
+  .page { display:none; padding:28px; box-sizing:border-box; max-width:980px; margin:0 auto; }
+  .page.active { display:block; }
 
-  /* Gallery */
-  .gallery{
-    display:flex;
-    gap:14px;
-    overflow-x:auto;
-    padding:12px;
-    scroll-snap-type:x mandatory;
-  }
-  .gallery::-webkit-scrollbar{display:none}
-  .card{
-    flex:0 0 72%;
-    max-width:380px;
-    border-radius:16px;
-    overflow:hidden;
-    position:relative;
-    box-shadow:0 12px 30px rgba(15,15,15,0.06);
-    scroll-snap-align:center;
-    background:#fff;
-    cursor:pointer;
-    transition:transform 300ms ease;
-  }
-  @media(min-width:760px){
-    .card{flex:0 0 30%}
-  }
-  .card img{
-    width:100%;
-    height:260px;
-    object-fit:cover;
-    display:block;
-    transition:transform .35s ease, filter .35s ease;
-  }
-  .card:hover img{ transform:scale(1.04); filter:brightness(.92); }
-  .card .meta{
-    padding:12px 14px;
-    font-size:14px;
-    color:var(--muted);
-  }
+  .page-header { text-align:center; margin-bottom:12px; }
+  .page-header h2{ font-size:28px; color:var(--accent); margin:0; }
+  .page-header p{ color:var(--muted); margin:8px 0 0 0; font-size:14px; }
 
-  /* glass popup */
-  .popup-back{
-    position:fixed; inset:0;
-    background: rgba(11,11,11,0.35);
-    backdrop-filter: blur(8px);
-    display:none;
-    align-items:center;
-    justify-content:center;
-    z-index:50;
-    padding:18px;
-  }
-  .glass{
-    width:100%;
-    max-width:420px;
-    border-radius:16px;
-    padding:20px;
-    background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
-    border:1px solid rgba(255,255,255,0.22);
-    box-shadow: 0 12px 30px rgba(12,12,12,0.15);
-    color:white;
-    transform-origin:center;
-    animation:pop .26s ease;
-    position:relative;
-  }
-  @keyframes pop{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
+  /* gallery slider - centered and small frames */
+  .gallery-wrap{ display:flex; flex-direction:column; align-items:center; gap:14px; margin-top:12px; }
+  .slider{ width:100%; max-width:820px; overflow:hidden; border-radius:16px; background:var(--card); padding:12px; box-shadow:0 18px 48px rgba(200,120,170,0.06); border:1px solid rgba(255,220,235,0.6); }
+  .slides{ display:flex; gap:14px; transition:transform 700ms ease; will-change:transform; }
+  .slide{ flex:0 0 auto; width:150px; border-radius:12px; overflow:hidden; position:relative; background:var(--card); cursor:pointer; }
+  .slide img{ width:100%; height:200px; object-fit:cover; display:block; transition:transform .3s ease, filter .3s ease; }
+  .slide:hover img{ transform:scale(1.04); filter:brightness(.95); }
+  .slide .caption{ font-size:13px; color:var(--muted); text-align:center; padding:8px 6px; }
 
-  /* tilted quote letter style */
-  .quote {
-    font-size:17px;
-    line-height:1.45;
-    color:#fff;
-    transform: rotate(-4deg);
-    text-align:left;
-    padding:10px 12px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
-    border-radius:10px;
-    margin-bottom:12px;
-    box-shadow: inset 0 -6px 14px rgba(0,0,0,0.06);
-  }
-  .quote .mark { font-size:26px; color:rgba(255,255,255,0.85); margin-right:8px; vertical-align:middle;}
-  .quote p{display:inline; color:rgba(255,255,255,0.95); font-weight:500}
+  /* slider controls */
+  .controls{ display:flex; gap:10px; align-items:center; margin-top:10px; }
+  .control-btn{ background:transparent; border:1px solid rgba(200,120,160,0.12); padding:8px 12px; border-radius:10px; cursor:pointer; color:var(--accent); font-weight:600; }
+  .control-btn:active{ transform:translateY(1px); }
+  .spacer{ width:12px; }
 
-  .close-btn{
-    display:inline-block;
-    margin-top:6px;
-    padding:8px 12px;
-    border-radius:10px;
-    border:none;
-    background:rgba(255,255,255,0.12);
-    color:#fff;
-    cursor:pointer;
-    font-weight:600;
-  }
+  /* glass popup (tilted quote style) */
+  .popup-back{ position:fixed; inset:0; background: rgba(0,0,0,0.36); backdrop-filter: blur(6px); display:none; align-items:center; justify-content:center; z-index:80; padding:20px; }
+  .glass-card{ width:100%; max-width:480px; background: linear-gradient(135deg, rgba(255,255,255,0.14), rgba(255,255,255,0.06)); border-radius:14px; padding:18px; color:white; transform:rotate(-4deg); border:1px solid rgba(255,255,255,0.2); box-shadow:0 18px 40px rgba(0,0,0,0.18); }
+  .glass-quote{ font-size:16px; line-height:1.5; color:#fff; }
+  .glass-close{ margin-top:12px; display:inline-block; padding:8px 12px; background:rgba(255,255,255,0.12); color:white; border-radius:10px; border:none; cursor:pointer; font-weight:700; }
 
-  /* music + controls + surprise button */
-  .controls{
-    margin-top:18px;
-    display:flex;
-    gap:12px;
-    align-items:center;
-    justify-content:center;
-    flex-wrap:wrap;
-  }
-  .player{
-    display:flex;
-    gap:8px;
-    align-items:center;
-    background:linear-gradient(180deg,#fff,#fff);
-    padding:10px 12px;border-radius:12px;
-    box-shadow:0 8px 20px rgba(15,15,15,0.06);
-    align-self:center;
-  }
-  .player audio{outline:none}
-  .surprise{
-    padding:12px 18px;
-    background:linear-gradient(90deg,var(--accent),#b12e7a);
-    color:#fff;border:none;border-radius:12px;
-    cursor:pointer;font-weight:600;
-    box-shadow:0 10px 25px rgba(200,60,130,0.14);
-  }
+  /* cake page */
+  .cake-area{ display:flex; flex-direction:column; align-items:center; gap:12px; padding-top:20px; }
+  .cake-wrap{ width:260px; height:160px; border-radius:16px; background: linear-gradient(180deg,#ffd8e8,#ffcde0); display:flex; align-items:center; justify-content:center; position:relative; box-shadow:0 20px 50px rgba(230,120,160,0.12); }
+  .cake-body{ width:180px; height:120px; background: linear-gradient(180deg,#ffb7d5,#ffa3c7); border-radius:12px; position:relative; box-shadow:0 8px 30px rgba(0,0,0,0.06); }
+  .icing{ position:absolute; top:-16px; width:220px; height:36px; background:#fff6fb; border-radius:50px; left:50%; transform:translateX(-50%); box-shadow:0 6px 20px rgba(255,200,230,0.6); }
+  .candle{ position:absolute; top:-46px; left:50%; transform:translateX(-50%); width:16px; height:40px; background: linear-gradient(180deg,#fff,#ffe9f1); border-radius:5px; display:flex; align-items:flex-start; justify-content:center; cursor:pointer; box-shadow:0 6px 18px rgba(255,140,180,0.2); }
+  .flame{ width:14px; height:20px; border-radius:50%; background: radial-gradient(circle at 45% 30%, #fff6a9, #ffc85c 45%, #ff8844 80%); position:absolute; top:-26px; left:50%; transform:translateX(-50%); box-shadow:0 6px 20px rgba(255,150,100,0.25); animation:flame 900ms infinite; }
+  @keyframes flame{ 0%{ transform: translateX(-50%) scale(1); } 50% { transform: translateX(-50%) scale(1.08);} 100%{ transform: translateX(-50%) scale(1);} }
 
-  /* cake modal (full screen) */
-  .cake-back{ position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:linear-gradient(180deg, rgba(12,10,20,0.6), rgba(12,10,20,0.6)); z-index:60; padding:18px;}
-  .cake-card{
-    width:100%; max-width:520px; border-radius:16px; padding:22px; background:linear-gradient(180deg,#fff4fb,#fff1f7); text-align:center; box-shadow:0 18px 50px rgba(10,8,30,0.35);
-  }
-  .cake-img{ width:220px; height:auto; margin:0 auto; position:relative; display:block; }
-  .candle-wrap{ position:relative; display:inline-block; margin-top:-40px; cursor:pointer; }
-  .flame{
-    width:18px; height:26px; margin:0 auto; border-radius:50% 50% 40% 40%;
-    background: radial-gradient(circle at 40% 30%, #fff1b8, #ffd36a 40%, #ff7a2d 70%, transparent 71%);
-    position:absolute; top:-40px; left:50%; transform:translateX(-50%); filter:drop-shadow(0 6px 10px rgba(255,120,140,0.15));
-    animation:flame 900ms infinite;
-  }
-  @keyframes flame{ 0%{transform:translateX(-50%) scale(1)} 50%{transform:translateX(-50%) scale(.92)} 100%{transform:translateX(-50%) scale(1)} }
+  /* letter panel with cut button (transparent background) */
+  .letter-panel{ margin-top:18px; width:90%; max-width:680px; background:rgba(255,255,255,0.95); border-radius:12px; padding:18px; box-shadow:0 12px 30px rgba(0,0,0,0.06); position:relative; text-align:left; }
+  .letter-text{ font-size:16px; color:#333; white-space:pre-wrap; min-height:80px; }
+  .cut-btn{ position:absolute; top:10px; right:10px; background: rgba(255,255,255,0.06); border:1px solid rgba(220,120,160,0.12); color:var(--accent); padding:8px 10px; border-radius:10px; cursor:pointer; font-weight:700; backdrop-filter: blur(4px); }
+  .signature{ margin-top:12px; font-weight:600; color:var(--accent); font-size:15px; min-height:22px; }
 
-  .candle-body{ width:10px; height:58px; background:linear-gradient(180deg,#fff,#ffe6f0); border-radius:4px; margin-top:-6px; display:block; position:relative; left:50%; transform:translateX(-50%); box-shadow:0 3px 10px rgba(0,0,0,0.06); }
+  /* floating play button (for autoplay) */
+  #playFloating{ position:fixed; bottom:18px; right:18px; z-index:90; background: linear-gradient(90deg,var(--accent), #c84a84); color:white; border:none; padding:10px 14px; border-radius:12px; box-shadow:0 12px 30px rgba(200,80,140,0.12); cursor:pointer; font-weight:700; }
 
-  .letter{
-    display:none;
-    margin-top:18px;
-    background:#fff;
-    padding:18px;border-radius:12px;color:#333; text-align:left; box-shadow:0 16px 40px rgba(10,10,20,0.08);
-    font-size:15px; line-height:1.5;
+  /* small responsiveness */
+  @media (max-width:720px){
+    .slides{ gap:12px; }
+    .slide{ width:140px; }
+    .gallery{ gap:10px; }
+    .intro-title{ font-size:28px; }
+    .cake-wrap{ width:220px; height:140px; }
   }
-  .letter h3{ margin:0 0 8px 0; color:var(--accent); font-size:18px }
-  .letter p{ margin:0 }
-
-  /* small footer note */
-  .foot{ margin-top:18px; font-size:13px; color:var(--muted)}
 </style>
 </head>
 <body>
 
-  <!-- subtle floating hearts placed randomly -->
-  <div class="float-heart" style="left:10%; top:12%;"></div>
-  <div class="float-heart" style="left:82%; top:22%; width:12px;height:12px;"></div>
-  <div class="float-heart" style="left:38%; top:6%; width:10px;height:10px;"></div>
+<!-- AUDIO (user-provided mp3) -->
+<audio id="bgMusic" loop preload="auto">
+  <source src="https://o.uguu.se/ewiwJDBv.mp3" type="audio/mp3">
+</audio>
 
-  <div class="header">
-    <div class="title">Happy Birthday Priyanshi ✨</div>
-    <div class="sub">A small page I made to brighten your day — just vibes, no pressure 💫</div>
+<!-- INTRO / Landing -->
+<div id="intro" class="centered">
+  <div class="intro-card" role="main" aria-labelledby="introTitle">
+    <div id="introTitle" class="intro-title">Happy Birthday Priyanshi ji ✨</div>
+    <div class="intro-sub">A small page I made for your special day — just vibes, smiles and good energy 💫</div>
+    <button id="startSurprise" class="surprise-btn" aria-controls="galleryPage">Open Surprise</button>
+    <div class="tiny-note">Tap the button to open your surprise — music will start when you open it 🎵</div>
+  </div>
+</div>
+
+<!-- GALLERY PAGE -->
+<section id="galleryPage" class="page" aria-hidden="true">
+  <div class="page-header">
+    <h2>Memory Core</h2>
+    <p>Little moments collected — tap a photo to read a short note.</p>
   </div>
 
-  <div class="wrap">
-
-    <!-- horizontally scrollable gallery -->
-    <div class="gallery" id="gallery">
-      <div class="card" onclick="openGlass(1)">
-        <img src="https://i.ibb.co/qwYzdhW/IMG-20251116-120503.jpg" alt="">
-        <div class="meta">Tap to view ✦</div>
-      </div>
-
-      <div class="card" onclick="openGlass(2)">
-        <img src="https://i.ibb.co/p6d09cBQ/IMG-20251116-120448.jpg" alt="">
-        <div class="meta">Tap to view ✦</div>
-      </div>
-
-      <div class="card" onclick="openGlass(3)">
-        <img src="https://i.ibb.co/1f5LpmHc/IMG-20251030-114937.jpg" alt="">
-        <div class="meta">Tap to view ✦</div>
-      </div>
-
-      <div class="card" onclick="openGlass(4)">
-        <img src="https://i.ibb.co/bjySY8D4/IMG-20251030-114921.jpg" alt="">
-        <div class="meta">Tap to view ✦</div>
-      </div>
-
-      <div class="card" onclick="openGlass(5)">
-        <img src="https://i.ibb.co/5XrFZcDD/signal-2025-08-08-21-11-57-417-4.jpg" alt="">
-        <div class="meta">Tap to view ✦</div>
-      </div>
-
-      <div class="card" onclick="openGlass(6)">
-        <img src="https://i.ibb.co/Ngwk5X34/signal-2025-08-08-21-11-57-417-2.jpg" alt="">
-        <div class="meta">Tap to view ✦</div>
+  <div class="gallery-wrap">
+    <div class="slider" aria-live="polite">
+      <div class="slides" id="slidesRow">
+        <!-- slides: use the 6 images user gave (kept small) -->
+        <div class="slide" data-index="0"><img src="https://i.ibb.co/qwYzdhW/IMG-20251116-120503.jpg" alt="photo1"><div class="caption">Tap to view ✦</div></div>
+        <div class="slide" data-index="1"><img src="https://i.ibb.co/93Nz1cQQ/IMG-20251116-120448.jpg" alt="photo2"><div class="caption">Tap to view ✦</div></div>
+        <div class="slide" data-index="2"><img src="https://i.ibb.co/wh3YTbMT/IMG-20251116-121550-318.jpg" alt="photo3"><div class="caption">Tap to view ✦</div></div>
+        <div class="slide" data-index="3"><img src="https://i.ibb.co/cpvn3PS/IMG-20251116-121553-635.jpg" alt="photo4"><div class="caption">Tap to view ✦</div></div>
+        <div class="slide" data-index="4"><img src="https://i.ibb.co/twgDQMR9/IMG-20251116-121555-261.jpg" alt="photo5"><div class="caption">Tap to view ✦</div></div>
+        <div class="slide" data-index="5"><img src="https://i.ibb.co/6c04yzFr/IMG-20251116-121556-285.jpg" alt="photo6"><div class="caption">Tap to view ✦</div></div>
       </div>
     </div>
 
-    <!-- glass popup -->
-    <div class="popup-back" id="popupBack">
-      <div class="glass" id="glassCard" role="dialog" aria-modal="true">
-        <div class="quote">
-          <span class="mark">“</span>
-          <p id="quoteText">Aesthetic message here</p>
-        </div>
-        <button class="close-btn" onclick="closeGlass()">Close</button>
-      </div>
-    </div>
-
-    <!-- music player + surprise -->
-    <div class="controls">
-      <div class="player">
-        <!-- soft piano (user prefer soft piano + one "favourite" player) -->
-        <svg width="20" height="20" viewBox="0 0 24 24" style="opacity:.9"><path fill="#e8438b" d="M12 3v10.55A4 4 0 1 0 14 17V7h4V3h-6z"/></svg>
-        <div style="font-size:14px; color:#333; margin-right:8px;">Soft piano</div>
-        <audio id="favAudio" controls preload="none" style="max-width:260px">
-          <!-- if autoplay blocked, user can press play; change src to her favourite track if you have it -->
-          <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_9b513b3df9.mp3?filename=piano-soft-background-ambient-110874.mp3" type="audio/mp3">
-          Your browser does not support audio.
-        </audio>
-      </div>
-
-      <button class="surprise" onclick="openCake()">🎁 Open Surprise</button>
-    </div>
-
-    <div class="foot">Swipe photos → Tap any image to open a small note ✨</div>
-  </div>
-
-  <!-- cake modal -->
-  <div class="cake-back" id="cakeBack">
-    <div class="cake-card">
-      <h2 style="margin-top:0;color:#e84b8b">Surprise 🎂</h2>
-      <div style="margin-top:6px;color:#555">Click the candle to blow it out</div>
-
-      <div style="margin-top:18px">
-        <img class="cake-img" src="https://i.ibb.co/3s7wV6F/cute-cake.png" alt="cake">
-        <div class="candle-wrap" id="candleWrap" onclick="blowCandle()">
-          <div class="flame" id="flameEl"></div>
-          <div class="candle-body"></div>
-        </div>
-      </div>
-
-      <div class="letter" id="letterBox" aria-live="polite">
-        <h3>“A small wish”</h3>
-        <p id="letterText">
-          <!-- typed by JS -->
-        </p>
-      </div>
-
-      <div style="margin-top:16px">
-        <button onclick="closeCake()" class="close-btn">Close</button>
-      </div>
+    <div class="controls" aria-hidden="false">
+      <button id="prevBtn" class="control-btn" aria-label="Previous">Previous</button>
+      <div class="spacer"></div>
+      <button id="nextSurprise" class="control-btn" aria-label="Next Surprise">Next Surprise</button>
     </div>
   </div>
+</section>
+
+<!-- GLASS POPUP -->
+<div class="popup-back" id="glassPopup" aria-hidden="true">
+  <div class="glass-card" role="dialog" aria-modal="true" aria-labelledby="popupMessage">
+    <div class="glass-quote" id="popupMessage">Message</div>
+    <button class="glass-close" id="glassClose">Close</button>
+  </div>
+</div>
+
+<!-- CAKE PAGE -->
+<section id="cakePage" class="page" aria-hidden="true">
+  <div class="page-header">
+    <h2>Cake Surprise</h2>
+    <p>Make a wish — click the candle ✨</p>
+  </div>
+
+  <div class="cake-area">
+    <div class="cake-wrap" aria-hidden="true">
+      <div class="icing" aria-hidden="true"></div>
+      <div class="cake-body" aria-hidden="true"></div>
+
+      <div class="candle" id="candleBtn" role="button" aria-label="Blow candle">
+        <div class="flame" id="candleFlame" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <div class="letter-panel" id="letterPanel" style="display:none;">
+      <button class="cut-btn" id="cutBtn" title="Cut the letter (finish typing)" aria-pressed="false">Cut ✂</button>
+      <div class="letter-text" id="letterText" aria-live="polite"></div>
+      <div class="signature" id="signatureArea"></div>
+    </div>
+  </div>
+</section>
+
+<!-- floating play (if user wants to play/pause manually) -->
+<button id="playFloating" aria-label="Play background music" title="Play music">Play Music</button>
 
 <script>
-  // --- Glass popup messages (tilted quote style with leading " mark already in layout)
-  const msgs = {
-    1: 'You carry a calm energy — quietly bright and lovely.',
-    2: 'That smile is soft, honest and makes small moments better.',
-    3: 'A photo that feels like a gentle memory — warm and real.',
-    4: 'Simple, clean and naturally photogenic — love the vibe.',
-    5: 'A candid frame that belongs in a happy collection.',
-    6: 'Bright, wholesome and easy-going energy — very pretty.'
-  };
+/* -------------------------
+   Page flow & DOM elements
+   ------------------------- */
+const intro = document.getElementById('intro');
+const startBtn = document.getElementById('startSurprise');
+const galleryPage = document.getElementById('galleryPage');
+const cakePage = document.getElementById('cakePage');
+const bgMusic = document.getElementById('bgMusic');
+const playFloating = document.getElementById('playFloating');
 
-  function openGlass(i){
-    const q = document.getElementById('quoteText');
-    q.textContent = msgs[i] || 'You are wonderful';
-    document.getElementById('popupBack').style.display = 'flex';
-    // subtle scale for glass
-    document.getElementById('glassCard').style.transform = 'rotate(-4deg) scale(.99)';
-    setTimeout(()=> document.getElementById('glassCard').style.transform = 'rotate(-4deg) scale(1)', 40);
-  }
-  function closeGlass(){
-    document.getElementById('popupBack').style.display = 'none';
-  }
+const slidesRow = document.getElementById('slidesRow');
+const slides = Array.from(document.querySelectorAll('.slide'));
+const glassPopup = document.getElementById('glassPopup');
+const popupMessage = document.getElementById('popupMessage');
+const glassClose = document.getElementById('glassClose');
 
-  // floating hearts random positions (very light)
-  (function placeHearts(){
-    const hearts = document.querySelectorAll('.float-heart');
-    hearts.forEach(h=>{
-      // random slight motion
-      h.animate([{transform:'translateY(0)'},{transform:'translateY(-12px)'}],{duration:4200,iterations:Infinity,direction:'alternate'});
-    });
-  })();
+const prevBtn = document.getElementById('prevBtn');
+const nextSurprise = document.getElementById('nextSurprise');
 
-  // --- Cake / candle logic
-  let blown = false;
-  function openCake(){
-    document.getElementById('cakeBack').style.display = 'flex';
-  }
-  function closeCake(){
-    document.getElementById('cakeBack').style.display = 'none';
-    // reset state if needed
-    const flame = document.getElementById('flameEl');
-    flame.style.display = 'block';
-    blown = false;
-    document.getElementById('letterBox').style.display = 'none';
-    document.getElementById('letterText').textContent = '';
-  }
+const candleBtn = document.getElementById('candleBtn');
+const candleFlame = document.getElementById('candleFlame');
+const letterPanel = document.getElementById('letterPanel');
+const letterText = document.getElementById('letterText');
+const cutBtn = document.getElementById('cutBtn');
+const signatureArea = document.getElementById('signatureArea');
 
-  function blowCandle(){
-    if(blown) return;
-    // play blow sound (tiny effect)
-    const s = new Audio('https://cdn.pixabay.com/download/audio/2021/08/04/audio_779c1d1e7c.mp3?filename=blow-out-candle-6081.mp3');
-    s.play().catch(()=>{});
-    // hide flame
-    document.getElementById('flameEl').style.display = 'none';
-    blown = true;
-    // show typed letter after small delay
-    setTimeout(()=> showLetter(), 600);
-  }
+let slideIndex = 0;
+let slideWidth = 0;
+let autoSlideTimer = null;
+let autoSlideDelay = 3000; // 3s between slides (slow)
+let isSliding = true;
+let popupOpen = false;
 
-  // Typewriter effect for letter
-  const letter = `May your days be calm, creative and filled with small bright moments.  
-You deserve peace, good coffee, and little surprises that make you smile.  
-Happy Birthday, Priyanshi ✨`;
+/* -------------------------
+   Messages for each image
+   (non-romantic, cute)
+   ------------------------- */
+const messages = [
+  'You carry a calm energy — quietly bright and lovely.',
+  'That smile is soft and honest — makes small moments better.',
+  'A photo that feels like a gentle, happy memory.',
+  'Simple and naturally photogenic — love this vibe.',
+  'A candid frame that belongs in a happy collection.',
+  'Bright, wholesome and easy-going energy — very pretty.'
+];
 
-  function showLetter(){
-    const box = document.getElementById('letterBox');
-    const tEl = document.getElementById('letterText');
-    box.style.display = 'block';
-    let i=0;
-    const speed = 28;
-    function typer(){
-      if(i < letter.length){
-        tEl.textContent += letter.charAt(i);
-        i++;
-        setTimeout(typer, speed);
-      }
-    }
-    typer();
-  }
+/* -------------------------
+   Utilities: position slides
+   ------------------------- */
+function updateSlideDimensions(){
+  // calculate slide width dynamically
+  const slideElem = slides[0];
+  slideWidth = slideElem ? slideElem.getBoundingClientRect().width + 14 : 164; // include gap
+}
+function goToSlide(i){
+  slideIndex = (i + slides.length) % slides.length;
+  const x = -(slideIndex * (slideWidth));
+  slidesRow.style.transform = `translateX(${x}px)`;
+}
 
-  // Accessibility: close popup on Esc
-  document.addEventListener('keydown', (e)=>{
-    if(e.key === 'Escape'){
-      closeGlass(); closeCake();
-    }
+/* -------------------------
+   Auto slide control
+   ------------------------- */
+function startAutoSlide(){
+  stopAutoSlide();
+  autoSlideTimer = setInterval(()=> {
+    if(!isSliding || popupOpen) return;
+    goToSlide(slideIndex + 1);
+  }, autoSlideDelay);
+}
+function stopAutoSlide(){
+  if(autoSlideTimer) { clearInterval(autoSlideTimer); autoSlideTimer = null; }
+}
+
+/* -------------------------
+   Popup logic (glass popup)
+   ------------------------- */
+function openPopupFor(index){
+  popupMessage.textContent = messages[index] || '';
+  glassPopup.style.display = 'flex';
+  glassPopup.setAttribute('aria-hidden','false');
+  popupOpen = true;
+  stopAutoSlide();
+}
+function closePopup(){
+  glassPopup.style.display = 'none';
+  glassPopup.setAttribute('aria-hidden','true');
+  popupOpen = false;
+  // resume after a tiny delay to allow user to see effect
+  setTimeout(()=> { if(!autoSlideTimer) startAutoSlide(); }, 220);
+}
+
+/* attach click on slides */
+slides.forEach((s, idx) => {
+  s.addEventListener('click',(e)=>{
+    openPopupFor(idx);
   });
+});
 
-  // hint: many browsers block autoplay. If background music doesn't start automatically,
-  // user can press play on the audio control above.
+/* close popup on background click or close button */
+glassClose.addEventListener('click', closePopup);
+glassPopup.addEventListener('click', (e)=>{ if(e.target === glassPopup) closePopup(); });
+
+/* -------------------------
+   Prev / Next Surprise controls
+   ------------------------- */
+prevBtn.addEventListener('click', ()=> {
+  isSliding = false; // stop temporarily
+  goToSlide(slideIndex - 1);
+  // small resume timer
+  setTimeout(()=> { isSliding = true; }, 1000);
+});
+
+nextSurprise.addEventListener('click', ()=> {
+  // open cake page (keep music playing)
+  showCakePage();
+});
+
+/* -------------------------
+   Start Surprise: show gallery, play music
+   ------------------------- */
+startBtn.addEventListener('click', async ()=>{
+  // hide intro, show gallery
+  intro.style.display = 'none';
+  galleryPage.classList.add('active');
+  galleryPage.setAttribute('aria-hidden','false');
+
+  // start music - must be triggered by user gesture so allowed
+  try{
+    await bgMusic.play();
+    playFloating.style.display = 'none';
+  }catch(e){
+    // play blocked or error
+    console.warn('bgMusic play blocked', e);
+    playFloating.style.display = 'block';
+  }
+
+  // prepare slider
+  updateSlideDimensions();
+  goToSlide(0);
+  isSliding = true;
+  startAutoSlide();
+
+  // ensure resize updates dims
+  window.addEventListener('resize', ()=> { updateSlideDimensions(); goToSlide(slideIndex); });
+});
+
+/* floating manual play/pause */
+playFloating.addEventListener('click', async ()=>{
+  try{
+    if(bgMusic.paused){
+      await bgMusic.play();
+      playFloating.textContent = 'Pause Music';
+    } else {
+      bgMusic.pause();
+      playFloating.textContent = 'Play Music';
+    }
+  }catch(e){ console.warn(e); }
+});
+
+/* -------------------------
+   Cake page flow & typing
+   ------------------------- */
+function showCakePage(){
+  galleryPage.classList.remove('active');
+  galleryPage.setAttribute('aria-hidden','true');
+  cakePage.classList.add('active');
+  cakePage.setAttribute('aria-hidden','false');
+  // stop slider
+  stopAutoSlide();
+  isSliding = false;
+  // ensure letter panel reset
+  letterPanel.style.display = 'none';
+  letterText.textContent = '';
+  signatureArea.textContent = '';
+  cutBtn.setAttribute('aria-pressed','false');
+}
+
+/* Candle click -> extinguish flame, then type letter */
+let typingTimer = null;
+let typingIndex = 0;
+let letterFull = `Dear Priyanshi,
+
+Wishing you a day filled with soft smiles, quiet joy, and tiny moments that make your heart light.
+May this year bring you calm, creativity, and little surprises that make you smile.
+
+Happy Birthday! ✨`;
+
+let signature = '--- (from Shivansh)';
+
+candleBtn.addEventListener('click', (e)=>{
+  // hide flame
+  candleFlame.style.display = 'none';
+  // reveal letter panel
+  letterPanel.style.display = 'block';
+  // start typing main letter
+  typingIndex = 0;
+  letterText.textContent = '';
+  signatureArea.textContent = '';
+  cutBtn.setAttribute('aria-pressed','false');
+  startTypingLetter();
+});
+
+function startTypingLetter(){
+  // clear old timer if any
+  if(typingTimer) clearInterval(typingTimer);
+  typingTimer = setInterval(()=> {
+    if(typingIndex < letterFull.length){
+      letterText.textContent += letterFull.charAt(typingIndex);
+      typingIndex++;
+    } else {
+      clearInterval(typingTimer);
+      typingTimer = null;
+      // when finished, start signature typing after small delay
+      setTimeout(()=> startSignatureTyping(), 700);
+    }
+  }, 28); // speed
+}
+
+/* signature typing */
+let sigIdx = 0;
+let sigTimer = null;
+function startSignatureTyping(){
+  sigIdx = 0;
+  signatureArea.textContent = '';
+  if(sigTimer) clearInterval(sigTimer);
+  sigTimer = setInterval(()=> {
+    if(sigIdx < signature.length){
+      signatureArea.textContent += signature.charAt(sigIdx);
+      sigIdx++;
+    } else {
+      clearInterval(sigTimer);
+      sigTimer = null;
+    }
+  }, 34);
+}
+
+/* Cut button: skip to signature (finish / stop typing) */
+cutBtn.addEventListener('click', ()=>{
+  // mark pressed
+  cutBtn.setAttribute('aria-pressed','true');
+  // stop typing main letter
+  if(typingTimer){ clearInterval(typingTimer); typingTimer = null; }
+  // reveal full letter immediately
+  letterText.textContent = letterFull;
+  // start signature typing if not started
+  if(sigTimer){ clearInterval(sigTimer); sigTimer = null; }
+  startSignatureTyping();
+});
+
+/* allow closing cake page and go back to gallery (optional) - we keep music playing */
+document.addEventListener('keydown', (e)=>{
+  if(e.key === 'Escape'){
+    // close popup if open
+    if(glassPopup.style.display === 'flex') closePopup();
+  }
+});
+
+/* Accessibility - ensure click outside glass closes popup is handled above */
 </script>
 </body>
-</html>
+  </html>
+
